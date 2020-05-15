@@ -24,4 +24,4 @@ jobs:
       run: npm test
     
     - name: Echo
-      run: echo ${{ steps.test.outputs }}
+      run: echo ${{ steps.test.outputs.numPassedTestSuites }}
