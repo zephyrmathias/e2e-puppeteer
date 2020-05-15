@@ -4,7 +4,7 @@
   "description": "e2e-puppeteer",
   "main": "index.js",
   "scripts": {
-    "test": "jest --config ./jest.config.json --json"
+    "test": "jest --config ./jest.config.json --json --outputFile=test-result.json"
   },
   "repository": {
     "type": "git",
