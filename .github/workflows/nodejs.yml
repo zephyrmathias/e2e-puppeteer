@@ -32,5 +32,5 @@ jobs:
     - name: Echo test-result.json
       run: |
         echo "-----------"
-        echo ${{ steps.test-result.outputs.content }}
-        echo "xxxx"
+        echo ${{ toJson(steps.test-result.outputs.content) }}
+        echo "yyyyy"
