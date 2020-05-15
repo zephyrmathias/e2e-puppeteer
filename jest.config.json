@@ -1,0 +1,4 @@
+{
+  "preset": "jest-puppeteer",
+  "setupFilesAfterEnv": ["./jest.setup.js"]
+}
