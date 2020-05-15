@@ -32,10 +32,10 @@ jobs:
     - name: Set Test Results
       id: data
       run: |
-        run: echo "::set-output name=TOTAL_PASSED::${{ toJson(steps.test-result.outputs.content) }} | jq '.numPassedTests'"
+        run: echo ::set-output name=TOTAL_PASSED::${{ toJson(steps.test-result.outputs.content) }} | jq '.numTotalTests'
     
     - name: Echo test-result.json
       run: |
         echo "-----------"
         echo ${{ steps.data.outputs.TOTAL_PASSED }}
-        echo "helloworlzzzzd?"
+        echo "12312411?"
