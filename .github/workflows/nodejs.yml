@@ -23,5 +23,11 @@ jobs:
       id: test
       run: npm test
     
-    - name: Echo
-      run: echo ${{ steps.test.outputs.numPassedTestSuites }}
+    - name: Read test-result.json
+      id: test-result
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./test-result.json
+  
+    - name: Echo test-result.json
+      run: echo ${{ steps.package.outputs.numPassedTestSuites }}
