@@ -30,4 +30,6 @@ jobs:
         path: ./test-result.json
   
     - name: Echo test-result.json
-      run: echo ${{ steps.package.outputs.numPassedTestSuites }}
+      run: |
+        echo ${{ steps.test-result.outputs.numPassedTests }}
+        echo ${{ steps.test-result.outputs.content }}
