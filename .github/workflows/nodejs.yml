@@ -32,5 +32,7 @@ jobs:
     - name: Echo test-result.json
       run: |
         echo "-----------"
-        echo ${{ toJson(steps.test-result.outputs.content) }} | jq '.[].numPassedTests'
-        echo "xxxzcfsdfsdasdqwewqeqe"
+        echo ${{ toJson(steps.test-result.outputs.content) }} | jq '.numPassedTests'
+        echo "qqqq"
+        echo ${{ toJson(steps.test-result.outputs.content.numPassedTests) }}
+        echo "xcm,zxmeqkwoeq"
