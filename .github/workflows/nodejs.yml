@@ -31,9 +31,8 @@ jobs:
   
     - name: Echo test-result.json
       run: |
-        echo "-qqqqqq----------"
-        echo Total Tests: ${{ toJson(steps.test-result.outputs.content.numTotalTests) }}
-        echo Total Passed Tests: ${{ toJson(steps.test-result.outputs.content.numPassedTests) }}
-        echo Total Failed Tests: ${{ toJson(steps.test-result.outputs.content.numFailedTests) }}
-        echo Total Skiped Tests: ${{ toJson(steps.test-result.outputs.content.numPendingTests) }}
+        echo "-----------"
+        echo ${{ toJson(steps.test-result.outputs.content) }} | jq '.numPassedTests'
+        echo "qqqq"
+        echo ${{ toJson(steps.test-result.outputs.content.numPassedTests) }}
         echo "xcm,zxmeqkwoeq"
