@@ -19,4 +19,9 @@ jobs:
 
     - run: npm ci
 
-    - run: npm test
+    - name: Run Test
+      id: test
+      run: npm test
+    
+    - name: Echo
+      run: echo ${{ steps.test.outputs }}
