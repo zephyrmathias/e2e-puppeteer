@@ -32,3 +32,4 @@ jobs:
     - name: Echo test-result.json
       run: |
         echo "-----------"
+        echo "xxxx"
