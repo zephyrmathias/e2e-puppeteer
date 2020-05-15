@@ -30,9 +30,7 @@ jobs:
         path: ./test-result.json
   
     - name: Echo test-result.json
-      env:
-        TOTAL_TESTS: ${{ toJson(steps.test-result.outputs.content) }} | jq '.numPassedTests'
       run: |
         echo "-----------"
-        echo ${{ env.TOTAL_TESTS }}
-        echo "zzzzq"
+        echo ${{ toJson(steps.test-result.outputs.content) | jq '.numPassedTests' }}
+        echo "helloworld?"
