@@ -31,5 +31,4 @@ jobs:
   
     - name: Echo test-result.json
       run: |
-        echo ${{ steps.test-result.outputs.content }}
         echo "-----------"
