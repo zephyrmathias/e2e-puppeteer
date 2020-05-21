@@ -1,0 +1,41 @@
+name: Puppeteer
+
+on:
+  repository_dispatch:
+    types: test
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js version 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - run: npm ci
+
+    - name: Run Test
+      id: test
+      run: npm test
+    
+    - name: Read test-result.json
+      id: test-result
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./test-result.json
+  
+    - name: Set Test Results
+      id: data
+      run: |
+        run: echo ::set-output name=TOTAL_PASSED::123
+    
+    - name: Echo test-result.json
+      run: |
+        echo "-----------"
+        echo ${{ steps.data.outputs.TOTAL_PASSED }}
+        echo "12312411?"
