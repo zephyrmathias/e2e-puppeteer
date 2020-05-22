@@ -21,9 +21,7 @@ jobs:
     
     - name: Check for broken links
       id: link-report
-      uses: celinekurpershoek/github-actions-link-checker@master
-      with:
-        url: 'https://www.google.com'
+      run: npm install broken-link-checker -g
 
     - name: Get the result
-      run: echo "${{steps.link-report.outputs.result}}"
+      run: blc https://www.google.com -efor
