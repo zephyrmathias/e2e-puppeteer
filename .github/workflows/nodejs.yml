@@ -19,7 +19,11 @@ jobs:
 
     - run: npm ci
     
-    - name: Test BCL
-      uses: marccampbell/hugo-linkcheck-action@v0.1.3
-      env:
-        HUGO_FINAL_URL: https://www.google.com
+    - name: Check for broken links
+      id: link-report
+      uses: celinekurpershoek/github-actions-link-checker@{version}
+      with:
+        url: 'https://www.google.com'
+
+    - name: Get the result
+      run: echo "${{steps.link-report.outputs.result}}"
