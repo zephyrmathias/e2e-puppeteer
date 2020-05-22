@@ -23,7 +23,7 @@ jobs:
       id: link-report
       uses: celinekurpershoek/github-actions-link-checker@master
       with:
-        url: 'https://www-pre-production.pmlo.co'
+        url: 'https://www.google.com'
 
     - name: Get the result
       run: echo "${{steps.link-report.outputs.result}}"
