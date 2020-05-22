@@ -21,7 +21,7 @@ jobs:
     
     - name: Check for broken links
       id: link-report
-      uses: celinekurpershoek/github-actions-link-checker@v1
+      uses: celinekurpershoek/github-actions-link-checker@master
       with:
         url: 'https://www.google.com'
 
