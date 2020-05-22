@@ -19,7 +19,7 @@ jobs:
     
     - name: Check for broken links
       id: link-report
-      uses: celinekurpershoek/github-actions-link-checker@{version}
+      uses: celinekurpershoek/github-actions-link-checker@master
       with:
         # Required:
         url: 'https://www-pre-production.pmlo.co'
