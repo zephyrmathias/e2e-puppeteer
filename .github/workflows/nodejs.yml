@@ -16,11 +16,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    
+    - name: Check for broken links
+      id: link-report
+      uses: celinekurpershoek/github-actions-link-checker@{version}
+      with:
+        # Required:
+        url: 'https://www-pre-production.pmlo.co'
+        # optional:
+        honorRobotExclusions: false
+        ignorePatterns: 'github,google'
 
-    - run: npm ci
-    
-    - name: Check
-      run: npm install broken-link-checker -g
-    
-    - name: Run
-      run: blc https://www-pre-production.pmlo.co -efor
+    - name: Get the result
+      run: echo "${{steps.link-report.outputs.result}}"
