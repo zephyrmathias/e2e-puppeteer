@@ -18,4 +18,8 @@ jobs:
         node-version: 12.x
 
     - run: npm ci
-
+    
+    - name: Test BCL
+      uses: marccampbell/hugo-linkcheck-action@v0.1.3
+      env:
+        HUGO_FINAL_URL: https://www.google.com
