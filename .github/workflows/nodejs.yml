@@ -19,9 +19,7 @@ jobs:
 
     - run: npm ci
     
-    - name: Check for broken links
-      id: link-report
-      run: npm install broken-link-checker -g
-
-    - name: Get the result
-      run: blc https://www.google.com -efor
+    - name: Check
+      uses: ruzickap/action-my-broken-link-checker@v1
+      with:
+        url: https://www-pre-production.pmlo.co
