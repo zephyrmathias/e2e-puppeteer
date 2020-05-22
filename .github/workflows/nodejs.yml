@@ -20,6 +20,7 @@ jobs:
     - run: npm ci
     
     - name: Check
-      uses: ruzickap/action-my-broken-link-checker@v1
-      with:
-        url: https://www-pre-production.pmlo.co
+      run: npm install broken-link-checker -g
+    
+    - name: Run
+      run: blc https://www-pre-production.pmlo.co -efor
