@@ -1,4 +1,5 @@
 import { defineFeature, loadFeature } from 'jest-cucumber'
+import { percySnapshot } from '@percy/puppeteer'
 
 const feature = loadFeature('./__tests__/features/Test.feature')
 
@@ -9,8 +10,9 @@ defineFeature(feature, (test) => {
     })
 
     then('done', async () => {
-      await page.screenshot({ path: 'screenshot.jpg' })
-      expect(1).toBe(1)
+      await percySnapshot(page, 'screenshot', {
+        widths: ['1366'],
+      })
     })
   })
 })

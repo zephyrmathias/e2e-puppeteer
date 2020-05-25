@@ -30,4 +30,5 @@ jobs:
       env:
         WEB_URL: https://www.google.com
         DEVICE: ${{ matrix.device }}
+        PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
       run: npm test
