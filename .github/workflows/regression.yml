@@ -31,4 +31,6 @@ jobs:
         WEB_URL: https://www.google.com
         DEVICE: ${{ matrix.device }}
         PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+        PERCY_PARALLEL_TOTAL: 2
+        PERCY_PARALLEL_NONCE: '${{ github.sha }}'
       run: npm test
