@@ -11,7 +11,7 @@ defineFeature(feature, (test) => {
 
     then('done', async () => {
       await percySnapshot(page, 'screenshot', {
-        widths: [1366],
+        widths: [process.env.DEVICE === 'desktop' ? 1366 : 375],
       })
     })
   })
