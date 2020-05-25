@@ -34,3 +34,11 @@ jobs:
         PERCY_PARALLEL_TOTAL: 2
         PERCY_PARALLEL_NONCE: '${{ github.sha }}'
       run: npm test
+
+  parallel:
+
+    runs-on: ubuntu-latest
+  
+    steps:
+    - name: After parallel
+      run: echo "after parallel"
