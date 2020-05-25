@@ -11,6 +11,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        device: ['desktop', 'mobile']
+
     steps:
     - uses: actions/checkout@v2
 
@@ -25,4 +29,5 @@ jobs:
     - name: Run test
       env:
         WEB_URL: https://www.google.com
+        DEVICE: ${{ matrix.device }}
       run: npm test
