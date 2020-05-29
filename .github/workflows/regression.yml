@@ -14,9 +14,6 @@ jobs:
       matrix:
         device: ['desktop', 'mobile']
 
-    outputs:
-      status: ${{ steps.result.outputs.status }}
-
     steps:
     - uses: actions/checkout@v2
 
@@ -33,9 +30,16 @@ jobs:
         WEB_URL: https://www.google.com
       run: npm test
 
-    - id: result
+    - name: Write Test Result
       if: ${{ always() }}
-      run: echo "::set-output name=status::${{ job.status }}"
+      run: echo ${{ job.status }} > ${{ matrix.device }}.txt
+
+    - name: Upload Test Result
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{ matrix.device }}
+        path: ${{ matrix.device }}.txt
 
   parallel:
     needs: [test1]
@@ -44,7 +48,17 @@ jobs:
     runs-on: ubuntu-latest
   
     steps:
+    - name: Download test results
+      uses: actions/download-artifact@v1
+      with:
+        name: desktop
+        
+    - name: Download test results
+      uses: actions/download-artifact@v1
+      with:
+        name: mobile
+      
     - name: After parallel
       run: |
-        echo ${{ needs['test1 (desktop)'].outputs.status }}
-        echo ${{ needs['test1 (mobile)'].outputs.status }}
+        echo ${{ desktop/desktop.txt }}
+        echo ${{ mobile/mobile.txt }}
