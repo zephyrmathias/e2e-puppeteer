@@ -9,6 +9,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    outputs:
+      status: ${{ steps.result.outputs.status }}
+
     steps:
     - uses: actions/checkout@v2
 
@@ -24,6 +27,9 @@ jobs:
       env:
         WEB_URL: https://www.google.com
       run: npm test
+
+    - id: result
+      run: echo "::set-output name=status::${{ job.status }}"
 
   test2:
 
@@ -53,4 +59,4 @@ jobs:
   
     steps:
     - name: After parallel
-      run: echo ${{ jobs.test1.status }}
+      run: echo ${{ needs.test1.outputs.status }}
