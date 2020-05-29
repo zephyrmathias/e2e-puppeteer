@@ -3,17 +3,11 @@ name: Puppeteer
 on:
   repository_dispatch:
     types: regression
-  schedule:
-    - cron: '0 2 * * *'
 
 jobs:
-  build:
+  test1:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        device: ['desktop', 'mobile']
 
     steps:
     - uses: actions/checkout@v2
@@ -29,16 +23,34 @@ jobs:
     - name: Run test
       env:
         WEB_URL: https://www.google.com
-        DEVICE: ${{ matrix.device }}
-        PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-        PERCY_PARALLEL_TOTAL: 2
-        PERCY_PARALLEL_NONCE: ${{ github.run_id }}
+      run: npm test
+
+  test2:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js version 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run test
+      env:
+        WEB_URL: https://www.google.com
       run: npm test
 
   parallel:
+    needs: [test1, test2]
+    if: ${{ always() }}
 
     runs-on: ubuntu-latest
   
     steps:
     - name: After parallel
-      run: echo "after parallel"
+      run: echo ${{ jobs.test1.status }}
