@@ -9,6 +9,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        device: ['desktop', 'mobile']
+
     outputs:
       status: ${{ steps.result.outputs.status }}
 
@@ -32,28 +37,8 @@ jobs:
       if: ${{ always() }}
       run: echo "::set-output name=status::${{ job.status }}"
 
-  test2:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Use Node.js version 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Run test
-      env:
-        WEB_URL: https://www.google.com
-      run: npm test
-
   parallel:
-    needs: [test1, test2]
+    needs: [test1]
     if: ${{ always() }}
 
     runs-on: ubuntu-latest
