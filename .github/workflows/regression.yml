@@ -58,8 +58,3 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: mobile
-      
-    - name: After parallel
-      run: |
-        echo ${{ desktop/desktop.txt }}
-        echo ${{ mobile/mobile.txt }}
