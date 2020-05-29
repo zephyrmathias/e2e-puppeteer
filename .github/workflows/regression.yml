@@ -24,20 +24,20 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-
-    - name: Set up tags
-      if: ${{ matrix.device }} === 'desktop'
-      run: export TAG="@smoke and not @mobile"
-    
-    - name: Set up tags
-      if: ${{ matrix.device }} === 'mobile'
-      run: export TAG="@smoke and not @desktop"
+      
+    - name: Set up Tag
+      uses: haya14busa/action-cond@v1
+      id: tag
+      with:
+        cond: ${{ matrix.device == 'desktop' }}
+        if_true: "@smoke and not @mobile"
+        if_false: "@smoke and not @desktop"
 
     - name: Run test
       env:
         WEB_URL: https://www.google.com
+        TAG: ${{ steps.tag.outputs.value }}
       run: |
-        echo $TAG
         npm test
 
     - name: Write Test Result
