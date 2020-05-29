@@ -15,7 +15,7 @@ jobs:
         device: ['desktop', 'mobile']
 
     outputs:
-      ${{ matrix.device }}: ${{ steps.result.outputs.status }}
+      status: ${{ steps.result.outputs.status }}
 
     steps:
     - uses: actions/checkout@v2
@@ -46,5 +46,5 @@ jobs:
     steps:
     - name: After parallel
       run: |
-        echo ${{ needs.test1.outputs.desktop }}
-        echo ${{ needs.test1.outputs.mobile }}
+        echo ${{ needs['test1 (desktop)'].outputs.status }}
+        echo ${{ needs['test1 (mobile)'].outputs.status }}
