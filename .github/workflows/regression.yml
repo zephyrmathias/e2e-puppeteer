@@ -13,7 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         device: ['desktop', 'mobile']
-        tags: ['mobile', 'desktop']
 
     steps:
     - uses: actions/checkout@v2
@@ -26,10 +25,20 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Set up tags
+      if: ${{ matrix.device }} === 'desktop'
+      run: export TAG="@smoke and not @mobile"
+    
+    - name: Set up tags
+      if: ${{ matrix.device }} === 'mobile'
+      run: export TAG="@smoke and not @desktop"
+
     - name: Run test
       env:
         WEB_URL: https://www.google.com
-      run: npm test
+      run: |
+        echo $TAG
+        npm test
 
     - name: Write Test Result
       if: ${{ always() }}
