@@ -29,6 +29,7 @@ jobs:
       run: npm test
 
     - id: result
+      if: ${{ always() }}
       run: echo "::set-output name=status::${{ job.status }}"
 
   test2:
