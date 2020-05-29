@@ -13,6 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         device: ['desktop', 'mobile']
+        tags: ['mobile', 'desktop']
 
     steps:
     - uses: actions/checkout@v2
