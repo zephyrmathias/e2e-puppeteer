@@ -46,20 +46,23 @@ jobs:
       with:
         path: ./test-result.json
         
-    - name: get version
-      id: version
+    - name: Get Total Passed Tests
+      id: passed-tests
       uses: notiz-dev/github-action-json-property@release
       with: 
         path: 'test-result.json'
         prop_path: 'numPassedTests'
-
-    - run: echo ${{steps.version.outputs.prop}} 
+        
+    - name: Get Total Failed Tests
+      id: failed-tests
+      uses: notiz-dev/github-action-json-property@release
+      with: 
+        path: 'test-result.json'
+        prop_path: 'numFailedTests'
 
     - name: Write number of tests
-      env:
-        PASSED: ${{ toJson(steps.test-result.outputs.content) }} | jq '.numPassedTests'
       run: |
-        echo "{\"title\":\"Passed\",\"value\":\"${{ env.PASSED }}\",\"short\":true}" > ${{ matrix.device }}_results.txt
+        echo "{\"title\":\"Passed\",\"value\":\"${{ steps.passed-tests.prop }}\",\"short\":true}" > ${{ matrix.device }}_results.txt
 
     - name: Write Test Result
       if: ${{ always() }}
