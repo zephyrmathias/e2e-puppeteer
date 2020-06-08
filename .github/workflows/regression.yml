@@ -82,6 +82,13 @@ jobs:
       with:
         name: ${{ matrix.device }}
         path: ${{ matrix.device }}.txt
+        
+    - name: Upload Test Result
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v1
+      with:
+        name: test-result.json
+        path: test-result.json
 
   parallel:
     needs: [test1]
