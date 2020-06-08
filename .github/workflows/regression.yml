@@ -53,12 +53,12 @@ jobs:
         path: 'test-result.json'
         prop_path: 'numPassedTests'
         
-    - name: Get Total Failed Tests
-      id: failed-tests
-      uses: notiz-dev/github-action-json-property@release
-      with: 
-        path: 'test-result.json'
-        prop_path: 'numFailedTests'
+#     - name: Get Total Failed Tests
+#       id: failed-tests
+#       uses: notiz-dev/github-action-json-property@release
+#       with: 
+#         path: 'test-result.json'
+#         prop_path: 'numFailedTests'
 
     - name: Write number of tests
       run: |
