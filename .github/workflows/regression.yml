@@ -87,10 +87,26 @@ jobs:
         name: test-result
         
     - name: get version
-      id: version
+      id: passed
       uses: notiz-dev/github-action-json-property@release
       with: 
           path: 'test-result/test-result.json'
           prop_path: 'numPassedTests'
           
-    - run: echo ${{ steps.version.outputs.prop }} 
+    - name: get version
+      id: failed
+      uses: notiz-dev/github-action-json-property@release
+      with: 
+          path: 'test-result/test-result.json'
+          prop_path: 'numFailedTests'
+
+    - name: Set Failed Tests
+      if: ${{ always() }}
+      uses: haya14busa/action-cond@v1
+      id: color
+      with:
+        cond: ${{ stteps.failed.status }}
+        if_true: '#8FD400'
+        if_false: '#EF3340'
+
+    - run: echo ${{ steps.passed.outputs.prop }} 
