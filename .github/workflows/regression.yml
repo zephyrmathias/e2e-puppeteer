@@ -46,28 +46,6 @@ jobs:
       with:
         path: ./test-result.json
 
-    - name: Read Properties
-      id: read_property
-      uses:  ashley-taylor/read-json-property-action@v1.0
-      with:
-        path: test-result.json
-        property: numPassedTests
-
-    - name: echo artifact
-      run: echo ${{ steps.read_property.outputs.value }}
-
-    - name: Write number of tests
-      if: ${{ always() }}
-      run: |
-        echo "{\"title\":\"Passed\",\"value\":\"${{ steps.read_property.outputs.value }}\",\"short\":true}" > ${{ matrix.device }}_results.txt
-        
-    - name: Upload Test Result
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v1
-      with:
-        name: ${{ matrix.device }}_results
-        path: ${{ matrix.device }}_results.txt
-
     - name: Write Test Result
       if: ${{ always() }}
       run: echo ${{ job.status }} > ${{ matrix.device }}.txt
@@ -83,7 +61,7 @@ jobs:
       if: ${{ always() }}
       uses: actions/upload-artifact@v1
       with:
-        name: test-result.json
+        name: test-result
         path: test-result.json
 
   parallel:
@@ -102,3 +80,17 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: mobile
+
+    - name: Download test results
+      uses: actions/download-artifact@v1
+      with:
+        name: test-result
+        
+    - name: get version
+      id: version
+      uses: notiz-dev/github-action-json-property@release
+      with: 
+          path: 'test-result/test-result.json'
+          prop_path: 'numPassedTests'
+          
+    - run: echo ${{ steps.version.outputs.prop }} 
