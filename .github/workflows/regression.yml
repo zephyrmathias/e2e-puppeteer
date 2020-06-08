@@ -46,25 +46,12 @@ jobs:
       with:
         path: ./test-result.json
 
-    - name: Read Properties
-      id: read_property
-      uses:  ashley-taylor/read-json-property-action@v1.0
+    - id: data
+      uses: gr2m/get-json-paths-action@v1.x
       with:
-        path: test-result.json
-        property: numPassedTests
-  
-    - name: echo artifact
-      run: echo ${{ steps.read_property.outputs.value }}
-    
-    - name: Read Properties
-      id: failed-tests
-      uses:  ashley-taylor/read-json-property-action@v1.0
-      with:
-        path: test-result.json
-        property: numFailedTests
-  
-    - name: echo artifact
-      run: echo ${{ steps.failed-tests.outputs.value }}
+        json: ${{ toJson(steps.test-result.outputs.content) }}
+        bar: "numPassedTests"
+    - run: "echo bar is ${{ steps.data.outputs.bar }}"
 
     - name: Write number of tests
       if: ${{ always() }}
@@ -112,13 +99,3 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: mobile
-        
-    - name: Read Properties
-      id: read_property
-      uses:  ashley-taylor/read-json-property-action@v1.0
-      with:
-        path: test-result.json
-        property: numPassedTests
-  
-    - name: echo artifact
-      run: echo ${{ steps.read_property.outputs.value }}
