@@ -45,25 +45,31 @@ jobs:
       uses: juliangruber/read-file-action@v1
       with:
         path: ./test-result.json
-        
-    - name: Get Total Passed Tests
-      id: passed-tests
-      uses: notiz-dev/github-action-json-property@release
-      with: 
-        path: 'test-result.json'
-        prop_path: 'numPassedTests'
-        
-    - name: Get Total Failed Tests
+
+    - name: Read Properties
+      id: read_property
+      uses:  ashley-taylor/read-json-property-action@v1.0
+      with:
+        path: test-result.json
+        property: numPassedTests
+  
+    - name: echo artifact
+      run: echo ${{ steps.read_property.outputs.value }}
+    
+    - name: Read Properties
       id: failed-tests
-      uses: notiz-dev/github-action-json-property@release
-      with: 
-        path: 'test-result.json'
-        prop_path: 'numFailedTests'
+      uses:  ashley-taylor/read-json-property-action@v1.0
+      with:
+        path: test-result.json
+        property: numFailedTests
+  
+    - name: echo artifact
+      run: echo ${{ steps.failed-tests.outputs.value }}
 
     - name: Write number of tests
       if: ${{ always() }}
       run: |
-        echo "{\"title\":\"Passed\",\"value\":\"${{ steps.passed-tests.outputs.prop }}\",\"short\":true}" > ${{ matrix.device }}_results.txt
+        echo "{\"title\":\"Passed\",\"value\":\"${{ steps.read_property.outputs.value }}\",\"short\":true}" > ${{ matrix.device }}_results.txt
         
     - name: Upload Test Result
       if: ${{ always() }}
@@ -106,3 +112,13 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: mobile
+        
+    - name: Read Properties
+      id: read_property
+      uses:  ashley-taylor/read-json-property-action@v1.0
+      with:
+        path: test-result.json
+        property: numPassedTests
+  
+    - name: echo artifact
+      run: echo ${{ steps.read_property.outputs.value }}
