@@ -105,7 +105,7 @@ jobs:
       uses: haya14busa/action-cond@v1
       id: color
       with:
-        cond: ${{ stteps.failed.status }}
+        cond: ${{ steps.failed.status }}
         if_true: '#8FD400'
         if_false: '#EF3340'
 
