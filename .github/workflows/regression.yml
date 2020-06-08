@@ -48,7 +48,7 @@ jobs:
         
     - name: Write number of tests
       env:
-        PASSED: ${{ toJson(steps.test-result.outputs.content) | jq '.numPassedTests' }}
+        PASSED: ${{ toJson(steps.test-result.outputs.content) }} | jq '.numPassedTests'
       run: echo "{\"title\":\"Passed\",\"value\":\"${{ env.PASSED }}\",\"short\":true}" > ${{ matrix.device }}_results.txt
 
     - name: Write Test Result
