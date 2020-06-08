@@ -62,7 +62,7 @@ jobs:
 
     - name: Write number of tests
       run: |
-        echo "{\"title\":\"Passed\",\"value\":\"${{ steps.passed-tests.prop }}\",\"short\":true}" > ${{ matrix.device }}_results.txt
+        echo "{\"title\":\"Passed\",\"value\":\"${{ steps.passed-tests.outputs.prop }}\",\"short\":true}" > ${{ matrix.device }}_results.txt
 
     - name: Write Test Result
       if: ${{ always() }}
