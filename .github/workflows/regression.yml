@@ -93,20 +93,12 @@ jobs:
           path: 'test-result/test-result.json'
           prop_path: 'numPassedTests'
           
-    - name: get version
-      id: failed
-      uses: notiz-dev/github-action-json-property@release
-      with: 
-          path: 'test-result/test-result.json'
-          prop_path: 'numFailedTests'
-
-    - name: Set Failed Tests
-      if: ${{ always() }}
-      uses: haya14busa/action-cond@v1
-      id: color
-      with:
-        cond: ${{ steps.failed.status == 'failure' }}
-        if_true: '#8FD400'
-        if_false: '#EF3340'
+    - id: set_var
+      run: |
+        content=`cat test-result/test-result.json`
+        echo "::set-output name=results::$content"
+    - run: |
+        echo "${{fromJson(steps.set_var.outputs.results).numPassedTests}}"
+        echo "${{fromJson(steps.set_var.outputs.results).numFailedTests}}"
 
     - run: echo ${{ steps.passed.outputs.prop }} 
