@@ -97,8 +97,12 @@ jobs:
       run: |
         content=`cat test-result/test-result.json`
         echo "::set-output name=results::$content"
+  
+    - id: set_outputs
     - run: |
-        echo "${{fromJson(steps.set_var.outputs.results).numPassedTests}}"
-        echo "${{fromJson(steps.set_var.outputs.results).numFailedTests}}"
+        echo "::set-output name=numPassedTests::${{fromJson(steps.set_var.outputs.results).numPassedTests}}"
+        echo "::set-output name=numFailedTests::${{fromJson(steps.set_var.outputs.results).numFailedTests}}"
 
-    - run: echo ${{ steps.passed.outputs.prop }} 
+    - run: |
+        echo ${{ steps.set_outputs.outputs.numPassedTests }}
+        echo ${{ steps.set_outputs.outputs.numFailedTests }}
